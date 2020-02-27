@@ -1,0 +1,10 @@
+// Log to the console
+b robot log Hello From Shleam!
+// Wait 2 seconds
+b robot sleep 2000
+// Drive half power for one second
+b drive power 0.5:0.5
+b robot sleep 1000
+b drive power 0:0
+// Log to the console
+b robot log Bye!
