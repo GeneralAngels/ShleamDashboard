@@ -72,7 +72,7 @@ public class Connection {
                 // Read result
                 String result = reader.readLine();
                 // Split result
-                String[] split = result.split(":");
+                String[] split = result.split(":", 2);
                 // Call callback
                 Callback callback = callbackQueue.remove();
                 if (callback != null)
