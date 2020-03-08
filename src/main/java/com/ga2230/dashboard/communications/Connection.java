@@ -78,7 +78,6 @@ public class Connection {
     private void connect() throws IOException {
         // Determine the address
         String address = "10." + (teamNumber / 100) + "." + (teamNumber % 100) + ".2";
-        address = "localhost";
         // Create a new socket
         socket = new Socket();
         // Open the socket
