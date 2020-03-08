@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run Dashboard" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="Dashboard" />
+    <option name="MAIN_CLASS_NAME" value="com.ga2230.dashboard.Dashboard" />
     <module name="ShleamDashboard.main" />
     <method v="2">
       <option name="Make" enabled="true" />

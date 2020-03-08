@@ -1,8 +1,11 @@
 plugins {
     id 'java'
+    id 'maven'
+    id 'signing'
 }
 
-version '2020.0.1'
+group = 'com.ga2230'
+version '2020.0.2'
 
 sourceCompatibility = 1.8
 
@@ -12,11 +15,11 @@ repositories {
 
 jar {
     manifest {
-        attributes("Manifest-Version": "1.0", "Main-Class": "Dashboard");
+        attributes("Manifest-Version": "1.0", "Main-Class": "com.ga2230.Dashboard");
     }
 }
 
-task buildExecutable(type: Jar) {
+task executableJar(type: Jar) {
     manifest.from jar.manifest
     from {
         configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
@@ -26,4 +29,63 @@ task buildExecutable(type: Jar) {
         exclude "META-INF/*.RSA"
     }
     with jar
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set('javadoc')
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: USERNAME, password: PASSWORD)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: USERNAME, password: PASSWORD)
+            }
+
+            pom.project {
+                name = rootProject.name
+                description = 'ShleamDashboard is a dashboard based on Shleam to better show Shleam\'s power.'
+                url = 'https://github.com/GeneralAngels/ShleamDashboard'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://choosealicense.com/licenses/mit/'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'NadavTasher'
+                        name = 'Nadav Tasher'
+                        email = 'tashernadav@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/GeneralAngels/ShleamDashboard.git'
+                    developerConnection = 'scm:git:git://github.com/GeneralAngels/ShleamDashboard.git'
+                    url = 'https://github.com/GeneralAngels/ShleamDashboard'
+                }
+            }
+        }
+    }
 }
