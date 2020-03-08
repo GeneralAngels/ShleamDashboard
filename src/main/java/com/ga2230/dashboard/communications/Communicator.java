@@ -2,6 +2,7 @@ package com.ga2230.dashboard.communications;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Copyright (c) 2019 General Angels
@@ -35,10 +36,11 @@ public abstract class Communicator {
 
     public static void reconnect() {
         new Thread(() -> {
-            for (Connection topic : connections) {
-                if (!topic.isConnected()) {
-                    topic.open();
-                }
+            Iterator<Connection> connectionIterator = connections.iterator();
+            while (connectionIterator.hasNext()) {
+                Connection connection = connectionIterator.next();
+                if (!connection.isConnected())
+                    connection.open();
             }
             unlockPopup();
         }).start();
