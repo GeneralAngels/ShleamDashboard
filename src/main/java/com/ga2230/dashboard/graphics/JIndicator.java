@@ -16,6 +16,7 @@ public class JIndicator extends JLabel {
         setHorizontalAlignment(JLabel.CENTER);
         setHorizontalTextPosition(JLabel.CENTER);
         setFont(getFont().deriveFont(Font.BOLD, 20f));
+        setOpaque(true);
 
         connection.register(new Connection.Callback() {
             @Override
